@@ -137,6 +137,13 @@ let appBuildWorkflow = """
 """
 ```
 
+#### Documentation Automation Submodules
+- **DocumentationAutomation** – umbrella orchestrator that routes parse, generate, and deploy stages while keeping guardrails active.
+- **DocumentationTasks** – queue and lifecycle tracker for parse/lint/render steps with priority, badges, and hooks.
+- **DocumentationAgent** – copilot surface for contextual recommendations, workflow linking, and escalation paths.
+- **DocumentationCommands** – command-center metadata that maps palette and shortcut actions back to automation cues.
+- **DocumentationWorkflow** – pipeline executor that sequences steps, captures telemetry, and emits completion events.
+
 ### 10. Testing & Quality Assurance
 ```swift
 // Auto-generates test suites
