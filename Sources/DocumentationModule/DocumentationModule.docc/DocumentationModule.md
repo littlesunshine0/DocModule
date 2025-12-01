@@ -49,6 +49,10 @@ let container = try ModelContainer(for: schema)
 
 ## Topics
 
+### Getting Started
+
+- <doc:GettingStarted>
+
 ### Content Models
 
 - ``GuideModel``
