@@ -115,51 +115,79 @@ public struct DocumentationParser: Sendable {
         }
         
         // Parse code blocks
-        let codeBlockPattern = /```(\w+)?(?::([^\n]+))?\n([\s\S]*?)```/
-        for match in processedContent.matches(of: codeBlockPattern) {
-            let block = ParsedCodeBlock(
-                language: String(match.output.1 ?? ""),
-                filename: match.output.2.map(String.init),
-                code: String(match.output.3),
-                highlightedLines: [],
-                showLineNumbers: true
-            )
-            codeBlocks.append(block)
-            blocks.append(.codeBlock(block))
+        let codeBlockPattern = "```(\\w+)?(?::([^\\n]+))?\\n([\\s\\S]*?)```"
+        if let regex = try? NSRegularExpression(pattern: codeBlockPattern, options: [.dotMatchesLineSeparators]) {
+            let matches = regex.matches(in: processedContent, range: NSRange(processedContent.startIndex..., in: processedContent))
+            for match in matches {
+                let languageRange = Range(match.range(at: 1), in: processedContent)
+                let filenameRange = Range(match.range(at: 2), in: processedContent)
+                let codeRange = Range(match.range(at: 3), in: processedContent)
+
+                let block = ParsedCodeBlock(
+                    language: languageRange.map { String(processedContent[$0]) } ?? "",
+                    filename: filenameRange.map { String(processedContent[$0]) },
+                    code: codeRange.map { String(processedContent[$0]) } ?? "",
+                    highlightedLines: [],
+                    showLineNumbers: true
+                )
+                codeBlocks.append(block)
+                blocks.append(.codeBlock(block))
+            }
         }
-        
+
         // Parse callouts
-        let calloutPattern = /:::(note|tip|warning|important|caution|info|success|danger|experiment)\n([\s\S]*?):::/
-        for match in processedContent.matches(of: calloutPattern) {
-            if let type = CalloutType(rawValue: String(match.output.1)) {
+        let calloutPattern = ":::(note|tip|warning|important|caution|info|success|danger|experiment)\\n([\\s\\S]*?):::"
+        if let regex = try? NSRegularExpression(pattern: calloutPattern, options: [.dotMatchesLineSeparators]) {
+            let matches = regex.matches(in: processedContent, range: NSRange(processedContent.startIndex..., in: processedContent))
+            for match in matches {
+                guard
+                    let typeRange = Range(match.range(at: 1), in: processedContent),
+                    let contentRange = Range(match.range(at: 2), in: processedContent),
+                    let type = CalloutType(rawValue: String(processedContent[typeRange]))
+                else { continue }
+
                 let callout = ParsedCallout(
                     type: type,
                     title: nil,
-                    content: String(match.output.2).trimmingCharacters(in: .whitespacesAndNewlines)
+                    content: String(processedContent[contentRange]).trimmingCharacters(in: .whitespacesAndNewlines)
                 )
                 callouts.append(callout)
                 blocks.append(.callout(callout))
             }
         }
-        
+
         // Parse links
-        let linkPattern = /\[([^\]]+)\]\(([^)]+)\)/
-        for match in processedContent.matches(of: linkPattern) {
-            let url = String(match.output.2)
-            links.append(ParsedLink(
-                text: String(match.output.1),
-                url: url,
-                isExternal: url.hasPrefix("http"),
-                isAPIReference: url.hasPrefix("doc:")
-            ))
+        let linkPattern = "\\[([^\\]]+)\\]\\(([^)]+)\\)"
+        if let regex = try? NSRegularExpression(pattern: linkPattern) {
+            let matches = regex.matches(in: processedContent, range: NSRange(processedContent.startIndex..., in: processedContent))
+            for match in matches {
+                guard
+                    let textRange = Range(match.range(at: 1), in: processedContent),
+                    let urlRange = Range(match.range(at: 2), in: processedContent)
+                else { continue }
+
+                let url = String(processedContent[urlRange])
+                links.append(ParsedLink(
+                    text: String(processedContent[textRange]),
+                    url: url,
+                    isExternal: url.hasPrefix("http"),
+                    isAPIReference: url.hasPrefix("doc:")
+                ))
+            }
         }
-        
+
         // Parse headings
-        let headingPattern = /^(#{1,6})\s+(.+)$/
-        for line in processedContent.components(separatedBy: .newlines) {
-            if let match = line.firstMatch(of: headingPattern) {
-                let level = match.output.1.count
-                let text = String(match.output.2)
+        let headingPattern = "^(#{1,6})\\s+(.+)$"
+        if let regex = try? NSRegularExpression(pattern: headingPattern, options: [.anchorsMatchLines]) {
+            let matches = regex.matches(in: processedContent, range: NSRange(processedContent.startIndex..., in: processedContent))
+            for match in matches {
+                guard
+                    let levelRange = Range(match.range(at: 1), in: processedContent),
+                    let textRange = Range(match.range(at: 2), in: processedContent)
+                else { continue }
+
+                let level = processedContent[levelRange].count
+                let text = String(processedContent[textRange])
                 let id = text.lowercased().replacingOccurrences(of: " ", with: "-")
                 blocks.append(.heading(level: level, text: text, id: id))
             }
