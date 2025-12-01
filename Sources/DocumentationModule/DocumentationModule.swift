@@ -5,7 +5,7 @@
 ///
 /// ## Overview
 ///
-/// DocumentationModule provides 12 content types, rich markdown extensions,
+/// DocumentationModule provides 26 content types, rich markdown extensions,
 /// animations, parsing, generation, and automation workflows.
 ///
 /// ## Content Types
@@ -22,6 +22,21 @@
 /// - ``VideoModel``: Video content
 /// - ``SampleModel``: Sample projects
 /// - ``TroubleshootingModel``: Problem-solution guides
+/// - ``CaseStudyModel``: Real-world success stories
+/// - ``WhitepaperModel``: Research-grade deep dives
+/// - ``IntegrationModel``: System and service integrations
+/// - ``RoadmapModel``: Milestones and strategic themes
+/// - ``UseCaseModel``: Value-driven scenarios
+/// - ``PlaybookModel``: Repeatable operational procedures
+/// - ``PolicyModel``: Standards and compliance rules
+/// - ``ReadmeModel``: Project introductions and setup
+/// - ``RequirementsModel``: Functional and non-functional needs
+/// - ``TaskListModel``: Actionable checklists
+/// - ``DesignDocModel``: Design rationale and decisions
+/// - ``BlueprintModel``: Architecture blueprints
+/// - ``GuideCollectionModel``: Curated bundles of guides
+/// - ``FrameworkModel``: Methodologies and principles
+/// - ``ResearchModel``: Experiments, data, and findings
 ///
 /// ## Features
 ///

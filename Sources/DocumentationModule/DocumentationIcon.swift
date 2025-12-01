@@ -24,6 +24,21 @@ public enum DocumentationIcon: String, Codable, Sendable, CaseIterable {
     case video = "play.rectangle.fill"
     case sample = "folder.fill.badge.gearshape"
     case troubleshooting = "wrench.and.screwdriver.fill"
+    case caseStudy = "briefcase.fill"
+    case whitepaper = "doc.richtext"
+    case integration = "puzzlepiece.extension.fill"
+    case roadmap = "map.fill"
+    case useCase = "target"
+    case playbook = "list.bullet.clipboard.fill"
+    case policy = "checkmark.shield.fill"
+    case readme = "doc.text.magnifyingglass"
+    case requirements = "checklist"
+    case tasks = "checklist.checked"
+    case design = "paintbrush.pointed.fill"
+    case blueprint = "ruler.fill"
+    case guides = "books.vertical.fill"
+    case framework = "cube.box.fill"
+    case research = "doc.text.magnifyingglass"
     
     /// The SF Symbol system name for this icon.
     public var systemName: String { rawValue }
@@ -43,6 +58,21 @@ public enum DocumentationIcon: String, Codable, Sendable, CaseIterable {
         case .video: return "Video"
         case .sample: return "Sample"
         case .troubleshooting: return "Troubleshooting"
+        case .caseStudy: return "Case Study"
+        case .whitepaper: return "Whitepaper"
+        case .integration: return "Integration"
+        case .roadmap: return "Roadmap"
+        case .useCase: return "Use Case"
+        case .playbook: return "Playbook"
+        case .policy: return "Policy"
+        case .readme: return "README"
+        case .requirements: return "Requirements"
+        case .tasks: return "Tasks"
+        case .design: return "Design"
+        case .blueprint: return "Blueprint"
+        case .guides: return "Guides"
+        case .framework: return "Framework"
+        case .research: return "Research"
         }
     }
 }
