@@ -14,6 +14,11 @@ public final class PlaybookModel {
     public var lastTestedAt: Date?
     public var updatedAt: Date
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     public static let color = DocumentationColor.playbook
     public static let shape = DocumentationShape.rectangle
@@ -28,7 +33,12 @@ public final class PlaybookModel {
         audience: String,
         lastTestedAt: Date? = nil,
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .playbook
+        icon: DocumentationIcon = .playbook,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.title = title
@@ -40,5 +50,10 @@ public final class PlaybookModel {
         self.lastTestedAt = lastTestedAt
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

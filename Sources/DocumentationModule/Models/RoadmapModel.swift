@@ -36,6 +36,11 @@ public final class RoadmapModel {
     public var createdAt: Date
     public var updatedAt: Date
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     public static let color = DocumentationColor.roadmap
     public static let shape = DocumentationShape.stadium
@@ -50,7 +55,12 @@ public final class RoadmapModel {
         status: String = "draft",
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .roadmap
+        icon: DocumentationIcon = .roadmap,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.title = title
@@ -62,5 +72,10 @@ public final class RoadmapModel {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

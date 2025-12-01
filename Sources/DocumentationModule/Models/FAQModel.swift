@@ -39,6 +39,11 @@ public final class FAQModel {
     public var category: ContentCategory
     public var entriesData: Data
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
     public var createdAt: Date
     public var updatedAt: Date
     public var userID: String
@@ -60,6 +65,11 @@ public final class FAQModel {
         category: ContentCategory = .fundamentals,
         entries: [FAQEntry] = [],
         icon: DocumentationIcon = .faq,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = [],
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         userID: String = "",
@@ -72,6 +82,11 @@ public final class FAQModel {
         self.category = category
         self.entriesData = (try? JSONEncoder().encode(entries)) ?? Data()
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.userID = userID

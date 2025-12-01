@@ -68,6 +68,11 @@ public final class WhitepaperModel {
 
     /// Icon associated with whitepapers.
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     /// The color associated with whitepapers.
     public static let color = DocumentationColor.whitepaper
@@ -91,7 +96,12 @@ public final class WhitepaperModel {
         viewCount: Int = 0,
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .whitepaper
+        icon: DocumentationIcon = .whitepaper,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.title = title
@@ -109,5 +119,10 @@ public final class WhitepaperModel {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

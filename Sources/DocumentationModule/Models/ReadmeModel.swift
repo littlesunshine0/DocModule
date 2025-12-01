@@ -14,6 +14,11 @@ public final class ReadmeModel {
     public var badges: [String]
     public var updatedAt: Date
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     public static let color = DocumentationColor.readme
     public static let shape = DocumentationShape.roundedSquare
@@ -28,7 +33,12 @@ public final class ReadmeModel {
         license: String,
         badges: [String] = [],
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .readme
+        icon: DocumentationIcon = .readme,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.projectName = projectName
@@ -40,5 +50,10 @@ public final class ReadmeModel {
         self.badges = badges
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

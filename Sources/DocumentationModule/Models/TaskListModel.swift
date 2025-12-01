@@ -33,6 +33,11 @@ public final class TaskListModel {
     public var owner: String
     public var updatedAt: Date
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     public static let color = DocumentationColor.tasks
     public static let shape = DocumentationShape.capsule
@@ -44,7 +49,12 @@ public final class TaskListModel {
         tasks: [TaskItem] = [],
         owner: String,
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .tasks
+        icon: DocumentationIcon = .tasks,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.title = title
@@ -53,5 +63,10 @@ public final class TaskListModel {
         self.owner = owner
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

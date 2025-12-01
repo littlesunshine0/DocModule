@@ -69,6 +69,21 @@ public final class CaseStudyModel {
     /// Icon associated with case studies.
     public var icon: DocumentationIcon
 
+    /// Optional thumbnail for quick previews.
+    public var thumbnailURL: String?
+
+    /// Custom icon name when the default needs overriding.
+    public var iconName: String
+
+    /// Fallback SF Symbol name when the primary asset is unavailable.
+    public var sfSymbolFallback: String
+
+    /// Hooks for automation callbacks or lifecycle events.
+    public var hooks: [String]
+
+    /// Extra sections to attach to the case study content.
+    public var additionalSections: [String]
+
     /// The color associated with case studies.
     public static let color = DocumentationColor.caseStudy
 
@@ -91,7 +106,12 @@ public final class CaseStudyModel {
         viewCount: Int = 0,
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .caseStudy
+        icon: DocumentationIcon = .caseStudy,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.title = title
@@ -109,5 +129,10 @@ public final class CaseStudyModel {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

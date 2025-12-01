@@ -12,6 +12,11 @@ public final class FrameworkModel {
     public var owner: String
     public var updatedAt: Date
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
 
     public static let color = DocumentationColor.framework
     public static let shape = DocumentationShape.circle
@@ -24,7 +29,12 @@ public final class FrameworkModel {
         artifacts: [String] = [],
         owner: String,
         updatedAt: Date = Date(),
-        icon: DocumentationIcon = .framework
+        icon: DocumentationIcon = .framework,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = []
     ) {
         self.id = id
         self.name = name
@@ -34,5 +44,10 @@ public final class FrameworkModel {
         self.owner = owner
         self.updatedAt = updatedAt
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
     }
 }

@@ -69,6 +69,11 @@ public final class SnippetModel {
     public var tags: [String]
     public var category: ContentCategory
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
     public var createdAt: Date
     public var updatedAt: Date
     public var userID: String
@@ -88,6 +93,11 @@ public final class SnippetModel {
         tags: [String] = [],
         category: ContentCategory = .samples,
         icon: DocumentationIcon = .snippet,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = [],
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         userID: String = "",
@@ -103,6 +113,11 @@ public final class SnippetModel {
         self.tags = tags
         self.category = category
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.userID = userID
