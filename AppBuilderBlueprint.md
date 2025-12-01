@@ -29,6 +29,7 @@ Design/Spec → Components → Code Generation → Multi-Platform → Testing �
 - Complete system hierarchy (Specification → Components → Generation → Output)
 - Integration with Automation Module
 - Multi-layer stack (design → code → deployment)
+- SwiftData-first persistence and reusable dashboard view models
 
 ### 2. Documentation Automation & Knowledge Pipeline
 - DocSpec schema for README, API docs, policies, playbooks, and blueprints
@@ -87,6 +88,9 @@ struct AppSpecification {
 - State management
 - Action handlers
 - Modifiers & accessibility
+// Documentation-specific SwiftData pipelines
+- DocumentationPersistenceController schema registry
+- DocumentationStoreViewModel for taxonomy-aware dashboards
 ```
 
 ### 7. Multi-Platform Generation
@@ -110,6 +114,8 @@ Generates complete Xcode project:
 - Dependencies
 - Resources & assets
 - Documentation
+- SwiftData persistence setup (shared + in-memory containers)
+- View models for dashboards and automation surfaces
 
 ### 9. Integration with Automation Module
 ```swift
@@ -143,6 +149,49 @@ let appBuildWorkflow = """
 - **DocumentationAgent** – copilot surface for contextual recommendations, workflow linking, and escalation paths.
 - **DocumentationCommands** – command-center metadata that maps palette and shortcut actions back to automation cues.
 - **DocumentationWorkflow** – pipeline executor that sequences steps, captures telemetry, and emits completion events.
+- **DocumentationTemplate** – versioned starter layouts with hooks, thumbnails, and icon fallbacks for each doc type.
+- **DocumentationRoles** – RBAC map that aligns authors, reviewers, and approvers to automation gates and escalations.
+- **DocumentationPermissions** – ACL enforcement for commands, tasks, and workflows with audit-friendly outputs.
+- **DocumentationSecurity** – guardrails, scanning, and remediation guidance for sensitive or regulated content.
+- **GenerationService** – render engine that applies templates, visual identity, and validations to produce final artifacts.
+- **TaggingService** – taxonomy-aware classifier that assigns type/kind/category, badges, and routing metadata.
+- **RealWorldService** – evidence pipeline that converts logs, metrics, and feedback into documentation updates.
+- **IndexingService** – discovery layer that indexes docs with taxonomy facets and exposes search/retrieval endpoints.
+- **ExportService** – publisher that bundles docs for HTML, PDF, DocC, and site distribution with branded assets.
+- **ImportService** – ingest front door for external files, specs, and repos that normalizes and triggers automation flows.
+- **ConfigService** – centralized configuration, presets, and environment overrides for automation modules.
+- **GatewayService** – API edge that fronts commands/agents, enforces quotas and permissions, and emits gateway telemetry.
+
+#### Automating Docs from User Files
+1) **Ingest** – point the automation module at user-provided files (Markdown, YAML, JSON, code) with `DocumentationGenerationPlan.InputFile`, tagging desired `DocumentationType`, priority, and visual metadata (thumbnail/icon/SF Symbol).
+2) **Parse** – run the default plan to tokenize and extract structure, emitting `parsed-structures.json` for downstream steps.
+3) **Classify** – map parsed content to the correct doc types using taxonomy labels to select templates and required sections.
+4) **Render** – apply templates and render Markdown/HTML/PDF, injecting thumbnails, icons, and fallback SF Symbols into headers and badges.
+5) **Publish** – ship outputs to the repo docs folder, docs site, PDF export, in-product help, and notify the workflow/agent surfaces.
+
+```swift
+// Example: build a plan directly from user files
+let files = [
+    DocumentationGenerationPlan.InputFile(
+        path: "docs/api/orders.md",
+        documentationType: .guide,
+        hooks: ["onSuggestExamples"],
+        thumbnail: "thumbnails/orders.png",
+        icon: "book.closed"
+    ),
+    DocumentationGenerationPlan.InputFile(
+        path: "specs/policies/security.yaml",
+        documentationType: .policy,
+        hooks: ["beforePublishSecurity"],
+        badge: "needs-review",
+        sfSymbol: "lock.shield"
+    )
+]
+
+let plan = DocumentationGenerationPlan.defaultPlan(for: files)
+// plan.steps now includes parse → classify → render → publish with automation hooks
+// workflow identifier remains documentation://generate for orchestration routing
+```
 
 ### 10. Testing & Quality Assurance
 ```swift
