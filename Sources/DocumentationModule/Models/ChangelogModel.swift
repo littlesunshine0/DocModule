@@ -57,6 +57,11 @@ public final class ChangelogModel {
     public var changesData: Data
     public var isPrerelease: Bool
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
     public var createdAt: Date
     public var updatedAt: Date
     public var userID: String
@@ -78,6 +83,11 @@ public final class ChangelogModel {
         changes: [ChangeEntry] = [],
         isPrerelease: Bool = false,
         icon: DocumentationIcon = .changelog,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = [],
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         userID: String = "",
@@ -90,6 +100,11 @@ public final class ChangelogModel {
         self.changesData = (try? JSONEncoder().encode(changes)) ?? Data()
         self.isPrerelease = isPrerelease
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.userID = userID
