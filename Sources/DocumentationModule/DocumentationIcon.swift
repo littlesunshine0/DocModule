@@ -39,6 +39,15 @@ public enum DocumentationIcon: String, Codable, Sendable, CaseIterable {
     case guides = "books.vertical.fill"
     case framework = "cube.box.fill"
     case research = "doc.text.magnifyingglass"
+    case view = "rectangle.and.text.rectangle"
+    case viewModel = "rectangle.on.rectangle.angled"
+    case dataModel = "tablecells"
+    case service = "gearshape.2.fill"
+    case manager = "person.3.sequence.fill"
+    case checkpoint = "flag.checkered"
+    case milestone = "flag.2.crossed.fill"
+    case event = "sparkles"
+    case otherDocumentation = "doc"
     
     /// The SF Symbol system name for this icon.
     public var systemName: String { rawValue }
@@ -73,6 +82,15 @@ public enum DocumentationIcon: String, Codable, Sendable, CaseIterable {
         case .guides: return "Guides"
         case .framework: return "Framework"
         case .research: return "Research"
+        case .view: return "View"
+        case .viewModel: return "View Model"
+        case .dataModel: return "Data Model"
+        case .service: return "Service"
+        case .manager: return "Manager"
+        case .checkpoint: return "Checkpoint"
+        case .milestone: return "Milestone"
+        case .event: return "Event"
+        case .otherDocumentation: return "Other Documentation"
         }
     }
 }

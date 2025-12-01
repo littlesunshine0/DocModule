@@ -29,6 +29,15 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
     case guides = "lavender"
     case framework = "forest"
     case research = "mulberry"
+    case view = "cerulean"
+    case viewModel = "periwinkle"
+    case dataModel = "graphite"
+    case service = "emerald"
+    case manager = "denim"
+    case checkpoint = "citrine"
+    case milestone = "scarlet"
+    case event = "gold"
+    case otherDocumentation = "fog"
     
     /// Hex color value for use in custom rendering.
     public var hexValue: String {
@@ -60,6 +69,15 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
         case .guides: return "#E6E6FA"
         case .framework: return "#228B22"
         case .research: return "#8B008B"
+        case .view: return "#0FA4D9"
+        case .viewModel: return "#99A9FF"
+        case .dataModel: return "#4B4B4B"
+        case .service: return "#2ECC71"
+        case .manager: return "#1560BD"
+        case .checkpoint: return "#E4D00A"
+        case .milestone: return "#C41E3A"
+        case .event: return "#D4AF37"
+        case .otherDocumentation: return "#D8D8D8"
         }
     }
     
@@ -93,6 +111,15 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
         case .guides: return (0.902, 0.902, 0.980)
         case .framework: return (0.133, 0.545, 0.133)
         case .research: return (0.545, 0.0, 0.545)
+        case .view: return (0.059, 0.643, 0.851)
+        case .viewModel: return (0.6, 0.663, 1.0)
+        case .dataModel: return (0.294, 0.294, 0.294)
+        case .service: return (0.180, 0.780, 0.443)
+        case .manager: return (0.082, 0.376, 0.741)
+        case .checkpoint: return (0.894, 0.816, 0.039)
+        case .milestone: return (0.769, 0.118, 0.227)
+        case .event: return (0.831, 0.686, 0.216)
+        case .otherDocumentation: return (0.847, 0.847, 0.847)
         }
     }
 }

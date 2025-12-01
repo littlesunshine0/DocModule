@@ -5,7 +5,7 @@
 ///
 /// ## Overview
 ///
-/// DocumentationModule provides 26 content types, rich markdown extensions,
+/// DocumentationModule provides 35 content types, rich markdown extensions,
 /// animations, parsing, generation, and automation workflows.
 ///
 /// ## Content Types
@@ -37,6 +37,15 @@
 /// - ``GuideCollectionModel``: Curated bundles of guides
 /// - ``FrameworkModel``: Methodologies and principles
 /// - ``ResearchModel``: Experiments, data, and findings
+/// - ``ViewDocumentationModel``: UI specifications and states
+/// - ``ViewModelDocumentationModel``: Presentation logic contracts
+/// - ``DataModelDocumentationModel``: Entity schemas and relationships
+/// - ``ServiceDocumentationModel``: Service contracts and SLAs
+/// - ``ManagerDocumentationModel``: Coordinator responsibilities
+/// - ``CheckpointDocumentationModel``: Validation gates and criteria
+/// - ``MilestoneDocumentationModel``: Major delivery goals
+/// - ``EventDocumentationModel``: Domain triggers and payloads
+/// - ``OtherDocumentationModel``: Miscellaneous documentation assets
 ///
 /// ## Features
 ///

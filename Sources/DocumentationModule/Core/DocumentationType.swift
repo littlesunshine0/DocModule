@@ -31,6 +31,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
     case guides
     case framework
     case research
+    case view
+    case viewModel
+    case dataModel
+    case service
+    case manager
+    case checkpoint
+    case milestone
+    case event
+    case otherDocumentation
     
     /// The icon for this documentation type.
     public var icon: DocumentationIcon {
@@ -62,6 +71,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .guides: return .guides
         case .framework: return .framework
         case .research: return .research
+        case .view: return .view
+        case .viewModel: return .viewModel
+        case .dataModel: return .dataModel
+        case .service: return .service
+        case .manager: return .manager
+        case .checkpoint: return .checkpoint
+        case .milestone: return .milestone
+        case .event: return .event
+        case .otherDocumentation: return .otherDocumentation
         }
     }
     
@@ -95,6 +113,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .guides: return .guides
         case .framework: return .framework
         case .research: return .research
+        case .view: return .view
+        case .viewModel: return .viewModel
+        case .dataModel: return .dataModel
+        case .service: return .service
+        case .manager: return .manager
+        case .checkpoint: return .checkpoint
+        case .milestone: return .milestone
+        case .event: return .event
+        case .otherDocumentation: return .otherDocumentation
         }
     }
     
@@ -128,6 +155,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .guides: return .pentagon
         case .framework: return .circle
         case .research: return .shield
+        case .view: return .rectangle
+        case .viewModel: return .roundedSquare
+        case .dataModel: return .square
+        case .service: return .roundedRectangle
+        case .manager: return .diamond
+        case .checkpoint: return .capsule
+        case .milestone: return .triangle
+        case .event: return .pentagon
+        case .otherDocumentation: return .parallelogram
         }
     }
     
@@ -161,6 +197,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .guides: return "Guides"
         case .framework: return "Framework"
         case .research: return "Research"
+        case .view: return "View"
+        case .viewModel: return "View Model"
+        case .dataModel: return "Data Model"
+        case .service: return "Service"
+        case .manager: return "Manager"
+        case .checkpoint: return "Checkpoint"
+        case .milestone: return "Milestone"
+        case .event: return "Event"
+        case .otherDocumentation: return "Other Documentation"
         }
     }
     
@@ -194,6 +239,15 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .guides: return "Curated sets of related guides"
         case .framework: return "Structured methodologies and principles"
         case .research: return "Research notes, experiments, and findings"
+        case .view: return "UI view specifications, states, and behaviors"
+        case .viewModel: return "Presentation logic and state mapping for views"
+        case .dataModel: return "Entity schemas and data modeling details"
+        case .service: return "Service definitions, contracts, and integrations"
+        case .manager: return "Coordinator and manager responsibilities"
+        case .checkpoint: return "Checkpoints to validate incremental progress"
+        case .milestone: return "Major delivery milestones and goals"
+        case .event: return "Domain events, triggers, and payloads"
+        case .otherDocumentation: return "Additional documentation that falls outside standard types"
         }
     }
 }
