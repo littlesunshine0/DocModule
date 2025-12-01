@@ -32,6 +32,22 @@ struct MyApp: App {
 }
 ```
 
+If you prefer to configure the schema manually, mirror the demo target by
+specifying the primary documentation models explicitly:
+
+```swift
+import DocumentationModule
+import SwiftData
+
+let schema = Schema([
+    GuideModel.self,
+    ArticleModel.self,
+    TutorialModel.self,
+    ReferenceModel.self
+])
+let container = try ModelContainer(for: schema)
+```
+
 ## Creating Content
 
 ### Creating a Guide
@@ -108,6 +124,26 @@ reference.codeExamples = [
 modelContext.insert(reference)
 ```
 
+### Generating multi-format outputs for a new document
+
+When a user selects a documentation type, keep Markdown, HTML, plain text, Pages, and DocC exports synchronized in a single call:
+
+```swift
+let content = DocumentationContent(
+    title: "Release Notes",
+    slug: "release-notes",
+    content: "# Release Notes\n\nDetails for this version...",
+    type: .changelog
+)
+
+let generator = DocumentationGenerator()
+let result = await generator.generateAllFormats(from: [content])
+
+if result.success {
+    print("Created \(result.totalFiles) artifacts across \(result.resultsByFormat.keys.count) formats")
+}
+```
+
 ## Surfacing Counts in a Dashboard
 
 `DocumentationStoreViewModel` provides taxonomy-aware counts for each
@@ -134,6 +170,23 @@ let color = GuideModel.color // .guide (blue)
 
 // Get the shape
 let shape = GuideModel.shape // .guide (rounded rectangle)
+```
+
+## Rendering in SwiftUI
+
+Pair your SwiftData queries with the visual identity helpers to build lists and dashboards quickly:
+
+```swift
+struct ContentListView: View {
+    @Query private var articles: [ArticleModel]
+
+    var body: some View {
+        List(articles) { article in
+            Label(article.title, systemImage: article.icon.systemName)
+        }
+        .navigationTitle("Documentation")
+    }
+}
 ```
 
 ## Topics

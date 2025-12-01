@@ -142,11 +142,15 @@ public actor DocumentationWorkflow {
                 output = "Transformation complete"
                 
             case .generate:
-                let result = await generator.generate(from: content)
+                let formatsOption = stepConfig.options["formats"]?.split(separator: ",") ?? []
+                let formats = formatsOption
+                    .compactMap { DocumentationGenerator.OutputFormat(rawValue: $0.trimmingCharacters(in: .whitespaces)) }
+                let generationFormats = formats.isEmpty ? DocumentationGenerator.OutputFormat.authoringDefaults : formats
+                let result = await generator.generateAllFormats(from: content, formats: generationFormats)
                 success = result.success
-                output = "Generated \(result.outputFiles.count) files"
+                output = "Generated \(result.totalFiles) files across \(generationFormats.count) formats"
                 errors = result.errors.map { $0.message }
-                
+            
             case .optimize:
                 output = "Optimization complete"
                 

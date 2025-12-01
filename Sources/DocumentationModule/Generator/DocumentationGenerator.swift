@@ -7,6 +7,8 @@ public struct DocumentationGenerator: Sendable {
         case html
         case markdown
         case docC
+        case pages
+        case plainText
         case pdf
         case epub
         case json
@@ -18,12 +20,19 @@ public struct DocumentationGenerator: Sendable {
             case .html: return "html"
             case .markdown: return "md"
             case .docC: return "docc"
+            case .pages: return "pages"
+            case .plainText: return "txt"
             case .pdf: return "pdf"
             case .epub: return "epub"
             case .json: return "json"
             case .openAPI: return "yaml"
             case .manPage: return "1"
             }
+        }
+
+        /// Default formats we keep in sync when a user creates a document.
+        public static var authoringDefaults: [OutputFormat] {
+            [.markdown, .html, .plainText, .pages, .docC]
         }
     }
     
@@ -90,6 +99,16 @@ public struct DocumentationGenerator: Sendable {
         public let codeBlockCount: Int
         public let linkCount: Int
     }
+
+    /// Aggregated results for a multi-format generation pass.
+    public struct MultiFormatGenerationResult: Sendable {
+        public let success: Bool
+        public let resultsByFormat: [OutputFormat: GenerationResult]
+        public let errors: [GenerationError]
+        public let warnings: [String]
+        public let totalFiles: Int
+        public let duration: TimeInterval
+    }
     
     private let config: GeneratorConfig
     private let parser: DocumentationParser
@@ -97,6 +116,49 @@ public struct DocumentationGenerator: Sendable {
     public init(config: GeneratorConfig = GeneratorConfig()) {
         self.config = config
         self.parser = DocumentationParser()
+    }
+
+    /// Generate all requested output formats, useful when creating a document once and
+    /// keeping HTML, Markdown, plain text, and Pages exports synchronized.
+    public func generateAllFormats(
+        from content: [DocumentationContent],
+        formats: [OutputFormat] = OutputFormat.authoringDefaults,
+        outputPath: String? = nil
+    ) async -> MultiFormatGenerationResult {
+        let start = Date()
+        var results: [OutputFormat: GenerationResult] = [:]
+        var allErrors: [GenerationError] = []
+        var allWarnings: [String] = []
+
+        for format in formats {
+            let formatConfig = GeneratorConfig(
+                outputFormat: format,
+                outputPath: "\(outputPath ?? config.outputPath)/\(format.rawValue)",
+                theme: config.theme,
+                includeSearch: config.includeSearch,
+                includeNavigation: config.includeNavigation,
+                syntaxHighlighting: config.syntaxHighlighting,
+                minifyOutput: config.minifyOutput,
+                generateSitemap: config.generateSitemap,
+                baseURL: config.baseURL
+            )
+            let formatGenerator = DocumentationGenerator(config: formatConfig)
+            let result = await formatGenerator.generate(from: content)
+            results[format] = result
+            allErrors.append(contentsOf: result.errors)
+            allWarnings.append(contentsOf: result.warnings)
+        }
+
+        let filesGenerated = results.values.reduce(0) { $0 + $1.outputFiles.count }
+
+        return MultiFormatGenerationResult(
+            success: allErrors.isEmpty,
+            resultsByFormat: results,
+            errors: allErrors,
+            warnings: allWarnings,
+            totalFiles: filesGenerated,
+            duration: Date().timeIntervalSince(start)
+        )
     }
     
     /// Generate documentation from content.
@@ -169,6 +231,10 @@ public struct DocumentationGenerator: Sendable {
             return generateHTML(content: content, parseResult: parseResult)
         case .markdown:
             return content.content
+        case .pages:
+            return generatePages(content: content, parseResult: parseResult)
+        case .plainText:
+            return generatePlainText(content: content, parseResult: parseResult)
         case .docC:
             return generateDocC(content: content, parseResult: parseResult)
         case .json:
@@ -228,6 +294,62 @@ public struct DocumentationGenerator: Sendable {
         default:
             return ""
         }
+    }
+
+    private func generatePlainText(
+        content: DocumentationContent,
+        parseResult: DocumentationParser.ParseResult
+    ) -> String {
+        var lines: [String] = ["# \(content.title)"]
+
+        for block in parseResult.blocks {
+            switch block {
+            case .paragraph(let text):
+                lines.append(text)
+            case .heading(let level, let text, _):
+                lines.append(String(repeating: "#", count: level) + " " + text)
+            case .list(let items, let ordered):
+                let prefix = ordered ? { (idx: Int) in "\(idx + 1). " } : { _ in "- " }
+                for (index, item) in items.enumerated() {
+                    lines.append(prefix(index) + item)
+                }
+            case .blockquote(let text):
+                lines.append("> " + text)
+            case .divider:
+                lines.append("---")
+            case .codeBlock(let code):
+                lines.append("```\n\(code.code)\n```")
+            case .callout(let callout):
+                lines.append("[\(callout.type.rawValue.uppercased())] \(callout.content)")
+            default:
+                break
+            }
+        }
+
+        return lines.joined(separator: "\n\n")
+    }
+
+    private func generatePages(
+        content: DocumentationContent,
+        parseResult: DocumentationParser.ParseResult
+    ) -> String {
+        let htmlBody = generateHTML(content: content, parseResult: parseResult)
+        let textSummary = generatePlainText(content: content, parseResult: parseResult)
+        let formatter = ISO8601DateFormatter()
+
+        return """
+        <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        <pages-document version=\"1.0\">
+            <metadata>
+                <title>\(content.title)</title>
+                <slug>\(content.slug)</slug>
+                <type>\(content.type.rawValue)</type>
+                <generatedAt>\(formatter.string(from: Date()))</generatedAt>
+            </metadata>
+            <summary><![CDATA[\n\(textSummary)\n]]></summary>
+            <body><![CDATA[\n\(htmlBody)\n]]></body>
+        </pages-document>
+        """
     }
     
     private func generateDocC(content: DocumentationContent, parseResult: DocumentationParser.ParseResult) -> String {
