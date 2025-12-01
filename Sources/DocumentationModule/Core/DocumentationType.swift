@@ -16,6 +16,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
     case video
     case sample
     case troubleshooting
+    case caseStudy
+    case whitepaper
+    case integration
+    case roadmap
+    case useCase
+    case playbook
+    case policy
+    case readme
+    case requirements
+    case tasks
+    case design
+    case blueprint
+    case guides
+    case framework
+    case research
+    case view
+    case viewModel
+    case dataModel
+    case service
+    case manager
+    case checkpoint
+    case milestone
+    case event
+    case otherDocumentation
     
     /// The icon for this documentation type.
     public var icon: DocumentationIcon {
@@ -32,6 +56,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .video: return .video
         case .sample: return .sample
         case .troubleshooting: return .troubleshooting
+        case .caseStudy: return .caseStudy
+        case .whitepaper: return .whitepaper
+        case .integration: return .integration
+        case .roadmap: return .roadmap
+        case .useCase: return .useCase
+        case .playbook: return .playbook
+        case .policy: return .policy
+        case .readme: return .readme
+        case .requirements: return .requirements
+        case .tasks: return .tasks
+        case .design: return .design
+        case .blueprint: return .blueprint
+        case .guides: return .guides
+        case .framework: return .framework
+        case .research: return .research
+        case .view: return .view
+        case .viewModel: return .viewModel
+        case .dataModel: return .dataModel
+        case .service: return .service
+        case .manager: return .manager
+        case .checkpoint: return .checkpoint
+        case .milestone: return .milestone
+        case .event: return .event
+        case .otherDocumentation: return .otherDocumentation
         }
     }
     
@@ -50,6 +98,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .video: return .video
         case .sample: return .sample
         case .troubleshooting: return .troubleshooting
+        case .caseStudy: return .caseStudy
+        case .whitepaper: return .whitepaper
+        case .integration: return .integration
+        case .roadmap: return .roadmap
+        case .useCase: return .useCase
+        case .playbook: return .playbook
+        case .policy: return .policy
+        case .readme: return .readme
+        case .requirements: return .requirements
+        case .tasks: return .tasks
+        case .design: return .design
+        case .blueprint: return .blueprint
+        case .guides: return .guides
+        case .framework: return .framework
+        case .research: return .research
+        case .view: return .view
+        case .viewModel: return .viewModel
+        case .dataModel: return .dataModel
+        case .service: return .service
+        case .manager: return .manager
+        case .checkpoint: return .checkpoint
+        case .milestone: return .milestone
+        case .event: return .event
+        case .otherDocumentation: return .otherDocumentation
         }
     }
     
@@ -68,6 +140,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .video: return .stadium
         case .sample: return .pentagon
         case .troubleshooting: return .triangle
+        case .caseStudy: return .shield
+        case .whitepaper: return .parallelogram
+        case .integration: return .roundedRectangle
+        case .roadmap: return .stadium
+        case .useCase: return .hexagon
+        case .playbook: return .rectangle
+        case .policy: return .diamond
+        case .readme: return .roundedSquare
+        case .requirements: return .square
+        case .tasks: return .capsule
+        case .design: return .octagon
+        case .blueprint: return .triangle
+        case .guides: return .pentagon
+        case .framework: return .circle
+        case .research: return .shield
+        case .view: return .rectangle
+        case .viewModel: return .roundedSquare
+        case .dataModel: return .square
+        case .service: return .roundedRectangle
+        case .manager: return .diamond
+        case .checkpoint: return .capsule
+        case .milestone: return .triangle
+        case .event: return .pentagon
+        case .otherDocumentation: return .parallelogram
         }
     }
     
@@ -86,6 +182,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .video: return "Video"
         case .sample: return "Sample Project"
         case .troubleshooting: return "Troubleshooting"
+        case .caseStudy: return "Case Study"
+        case .whitepaper: return "Whitepaper"
+        case .integration: return "Integration"
+        case .roadmap: return "Roadmap"
+        case .useCase: return "Use Case"
+        case .playbook: return "Playbook"
+        case .policy: return "Policy"
+        case .readme: return "README"
+        case .requirements: return "Requirements"
+        case .tasks: return "Tasks"
+        case .design: return "Design"
+        case .blueprint: return "Blueprint"
+        case .guides: return "Guides"
+        case .framework: return "Framework"
+        case .research: return "Research"
+        case .view: return "View"
+        case .viewModel: return "View Model"
+        case .dataModel: return "Data Model"
+        case .service: return "Service"
+        case .manager: return "Manager"
+        case .checkpoint: return "Checkpoint"
+        case .milestone: return "Milestone"
+        case .event: return "Event"
+        case .otherDocumentation: return "Other Documentation"
         }
     }
     
@@ -104,6 +224,30 @@ public enum DocumentationType: String, Codable, Sendable, CaseIterable {
         case .video: return "Video tutorials and demonstrations"
         case .sample: return "Complete sample projects"
         case .troubleshooting: return "Problem-solution guides"
+        case .caseStudy: return "Real-world stories with measurable outcomes"
+        case .whitepaper: return "Authoritative research and technical analysis"
+        case .integration: return "Guides for connecting systems and services"
+        case .roadmap: return "Forward-looking plans with milestones and themes"
+        case .useCase: return "Specific scenarios that illustrate product value"
+        case .playbook: return "Operational procedures and repeatable plays"
+        case .policy: return "Standards, rules, and compliance guidelines"
+        case .readme: return "Project overviews, setup, and usage instructions"
+        case .requirements: return "Functional and non-functional requirements"
+        case .tasks: return "Actionable task lists and checklists"
+        case .design: return "Design decisions, constraints, and rationale"
+        case .blueprint: return "High-level system and architecture blueprints"
+        case .guides: return "Curated sets of related guides"
+        case .framework: return "Structured methodologies and principles"
+        case .research: return "Research notes, experiments, and findings"
+        case .view: return "UI view specifications, states, and behaviors"
+        case .viewModel: return "Presentation logic and state mapping for views"
+        case .dataModel: return "Entity schemas and data modeling details"
+        case .service: return "Service definitions, contracts, and integrations"
+        case .manager: return "Coordinator and manager responsibilities"
+        case .checkpoint: return "Checkpoints to validate incremental progress"
+        case .milestone: return "Major delivery milestones and goals"
+        case .event: return "Domain events, triggers, and payloads"
+        case .otherDocumentation: return "Additional documentation that falls outside standard types"
         }
     }
 }
