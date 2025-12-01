@@ -14,6 +14,8 @@ public enum DocumentationShape: String, Codable, Sendable, CaseIterable {
     case stadium
     case pentagon
     case triangle
+    case shield
+    case parallelogram
     
     /// Corner radius to use when rendering this shape.
     public var cornerRadius: Double {
@@ -30,6 +32,8 @@ public enum DocumentationShape: String, Codable, Sendable, CaseIterable {
         case .stadium: return 20.0
         case .pentagon: return 0.0
         case .triangle: return 0.0
+        case .shield: return 10.0
+        case .parallelogram: return 6.0
         }
     }
     
@@ -48,6 +52,8 @@ public enum DocumentationShape: String, Codable, Sendable, CaseIterable {
         case .stadium: return 0
         case .pentagon: return 5
         case .triangle: return 3
+        case .shield: return 6
+        case .parallelogram: return 4
         }
     }
     
@@ -66,6 +72,8 @@ public enum DocumentationShape: String, Codable, Sendable, CaseIterable {
         case .stadium: return "stadium.fill"
         case .pentagon: return "pentagon.fill"
         case .triangle: return "triangle.fill"
+        case .shield: return "shield.fill"
+        case .parallelogram: return "parallelogram.fill"
         }
     }
 }

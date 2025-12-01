@@ -14,6 +14,30 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
     case video = "red"
     case sample = "mint"
     case troubleshooting = "yellow"
+    case caseStudy = "navy"
+    case whitepaper = "plum"
+    case integration = "turquoise"
+    case roadmap = "orchid"
+    case useCase = "coral"
+    case playbook = "steel"
+    case policy = "maroon"
+    case readme = "slate"
+    case requirements = "copper"
+    case tasks = "amber"
+    case design = "magenta"
+    case blueprint = "azure"
+    case guides = "lavender"
+    case framework = "forest"
+    case research = "mulberry"
+    case view = "cerulean"
+    case viewModel = "periwinkle"
+    case dataModel = "graphite"
+    case service = "emerald"
+    case manager = "denim"
+    case checkpoint = "citrine"
+    case milestone = "scarlet"
+    case event = "gold"
+    case otherDocumentation = "fog"
     
     /// Hex color value for use in custom rendering.
     public var hexValue: String {
@@ -30,6 +54,30 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
         case .video: return "#FF3B30"
         case .sample: return "#00C7BE"
         case .troubleshooting: return "#FFCC00"
+        case .caseStudy: return "#1D3A5F"
+        case .whitepaper: return "#9B59B6"
+        case .integration: return "#1ABC9C"
+        case .roadmap: return "#DA70D6"
+        case .useCase: return "#FF7F50"
+        case .playbook: return "#708090"
+        case .policy: return "#800000"
+        case .readme: return "#708090"
+        case .requirements: return "#B87333"
+        case .tasks: return "#FFC107"
+        case .design: return "#FF00FF"
+        case .blueprint: return "#007FFF"
+        case .guides: return "#E6E6FA"
+        case .framework: return "#228B22"
+        case .research: return "#8B008B"
+        case .view: return "#0FA4D9"
+        case .viewModel: return "#99A9FF"
+        case .dataModel: return "#4B4B4B"
+        case .service: return "#2ECC71"
+        case .manager: return "#1560BD"
+        case .checkpoint: return "#E4D00A"
+        case .milestone: return "#C41E3A"
+        case .event: return "#D4AF37"
+        case .otherDocumentation: return "#D8D8D8"
         }
     }
     
@@ -48,6 +96,30 @@ public enum DocumentationColor: String, Codable, Sendable, CaseIterable {
         case .video: return (1.0, 0.231, 0.188)
         case .sample: return (0.0, 0.780, 0.745)
         case .troubleshooting: return (1.0, 0.8, 0.0)
+        case .caseStudy: return (0.114, 0.227, 0.373)
+        case .whitepaper: return (0.608, 0.349, 0.714)
+        case .integration: return (0.102, 0.737, 0.612)
+        case .roadmap: return (0.855, 0.439, 0.839)
+        case .useCase: return (1.0, 0.498, 0.314)
+        case .playbook: return (0.439, 0.502, 0.569)
+        case .policy: return (0.502, 0.0, 0.0)
+        case .readme: return (0.439, 0.502, 0.569)
+        case .requirements: return (0.722, 0.451, 0.2)
+        case .tasks: return (1.0, 0.757, 0.027)
+        case .design: return (1.0, 0.0, 1.0)
+        case .blueprint: return (0.0, 0.498, 1.0)
+        case .guides: return (0.902, 0.902, 0.980)
+        case .framework: return (0.133, 0.545, 0.133)
+        case .research: return (0.545, 0.0, 0.545)
+        case .view: return (0.059, 0.643, 0.851)
+        case .viewModel: return (0.6, 0.663, 1.0)
+        case .dataModel: return (0.294, 0.294, 0.294)
+        case .service: return (0.180, 0.780, 0.443)
+        case .manager: return (0.082, 0.376, 0.741)
+        case .checkpoint: return (0.894, 0.816, 0.039)
+        case .milestone: return (0.769, 0.118, 0.227)
+        case .event: return (0.831, 0.686, 0.216)
+        case .otherDocumentation: return (0.847, 0.847, 0.847)
         }
     }
 }

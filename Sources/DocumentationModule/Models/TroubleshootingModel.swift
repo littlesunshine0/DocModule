@@ -64,6 +64,11 @@ public final class TroubleshootingModel {
     public var entriesData: Data
     public var relatedArticleIDs: [UUID]
     public var icon: DocumentationIcon
+    public var thumbnailURL: String?
+    public var iconName: String
+    public var sfSymbolFallback: String
+    public var hooks: [String]
+    public var additionalSections: [String]
     public var createdAt: Date
     public var updatedAt: Date
     public var userID: String
@@ -87,6 +92,11 @@ public final class TroubleshootingModel {
         entries: [TroubleshootingEntry] = [],
         relatedArticleIDs: [UUID] = [],
         icon: DocumentationIcon = .troubleshooting,
+        thumbnailURL: String? = nil,
+        iconName: String? = nil,
+        sfSymbolFallback: String? = nil,
+        hooks: [String] = [],
+        additionalSections: [String] = [],
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         userID: String = "",
@@ -101,6 +111,11 @@ public final class TroubleshootingModel {
         self.entriesData = (try? JSONEncoder().encode(entries)) ?? Data()
         self.relatedArticleIDs = relatedArticleIDs
         self.icon = icon
+        self.thumbnailURL = thumbnailURL
+        self.iconName = iconName ?? icon.systemName
+        self.sfSymbolFallback = sfSymbolFallback ?? icon.systemName
+        self.hooks = hooks
+        self.additionalSections = additionalSections
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.userID = userID
