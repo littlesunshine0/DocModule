@@ -29,6 +29,7 @@ Design/Spec → Components → Code Generation → Multi-Platform → Testing �
 - Complete system hierarchy (Specification → Components → Generation → Output)
 - Integration with Automation Module
 - Multi-layer stack (design → code → deployment)
+- SwiftData-first persistence and reusable dashboard view models
 
 ### 2. Documentation Automation & Knowledge Pipeline
 - DocSpec schema for README, API docs, policies, playbooks, and blueprints
@@ -87,6 +88,9 @@ struct AppSpecification {
 - State management
 - Action handlers
 - Modifiers & accessibility
+// Documentation-specific SwiftData pipelines
+- DocumentationPersistenceController schema registry
+- DocumentationStoreViewModel for taxonomy-aware dashboards
 ```
 
 ### 7. Multi-Platform Generation
@@ -110,6 +114,8 @@ Generates complete Xcode project:
 - Dependencies
 - Resources & assets
 - Documentation
+- SwiftData persistence setup (shared + in-memory containers)
+- View models for dashboards and automation surfaces
 
 ### 9. Integration with Automation Module
 ```swift

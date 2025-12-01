@@ -8,7 +8,8 @@ DocumentationModule provides SwiftData models for managing documentation content
 
 ## Setting Up the Model Container
 
-First, configure SwiftData with all documentation models:
+First, configure SwiftData with all documentation models. You can use the
+built-in persistence controller to avoid wiring the schema yourself:
 
 ```swift
 import SwiftData
@@ -19,13 +20,7 @@ struct MyApp: App {
     let container: ModelContainer
     
     init() {
-        let schema = Schema([
-            GuideModel.self,
-            ArticleModel.self,
-            TutorialModel.self,
-            ReferenceModel.self
-        ])
-        container = try! ModelContainer(for: schema)
+        container = DocumentationPersistenceController.shared
     }
     
     var body: some Scene {
@@ -111,6 +106,19 @@ reference.codeExamples = [
 ]
 
 modelContext.insert(reference)
+```
+
+## Surfacing Counts in a Dashboard
+
+`DocumentationStoreViewModel` provides taxonomy-aware counts for each
+documentation type, powered by SwiftData queries:
+
+```swift
+let store = DocumentationStoreViewModel()
+let context = ModelContext(DocumentationPersistenceController.inMemory())
+
+try store.refresh(using: context)
+print(store.summaries.map { "\($0.label): \($0.count)" }.joined(separator: ", "))
 ```
 
 ## Using Visual Identity
