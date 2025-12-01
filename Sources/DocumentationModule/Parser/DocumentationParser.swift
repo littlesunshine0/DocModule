@@ -234,4 +234,10 @@ public struct DocumentationParser: Sendable {
         
         return errors
     }
+
+    private func regexMatches(of pattern: String, in content: String, options: NSRegularExpression.Options = []) -> [NSTextCheckingResult] {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else { return [] }
+        let range = NSRange(location: 0, length: (content as NSString).length)
+        return regex.matches(in: content, options: [], range: range)
+    }
 }
