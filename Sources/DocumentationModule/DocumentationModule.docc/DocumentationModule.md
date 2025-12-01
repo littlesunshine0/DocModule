@@ -117,6 +117,7 @@ let container = try ModelContainer(for: schema)
 
 ### Automation
 
+- ``DocumentationAutomation``
 - ``DocumentationWorkflow``
 - ``ScheduledTask``
 - ``TaskSchedule``
