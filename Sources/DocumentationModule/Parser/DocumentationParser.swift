@@ -115,54 +115,73 @@ public struct DocumentationParser: Sendable {
         }
         
         // Parse code blocks
-        let codeBlockPattern = /```(\w+)?(?::([^\n]+))?\n([\s\S]*?)```/
-        for match in processedContent.matches(of: codeBlockPattern) {
+        let codeBlockPattern = "```(\\w+)?(?::([^\\n]+))?\\n([\\s\\S]*?)```"
+        for match in regexMatches(of: codeBlockPattern, in: processedContent, options: [.dotMatchesLineSeparators]) {
+            guard let codeRange = Range(match.range(at: 3), in: processedContent) else { continue }
+
+            let languageRange = Range(match.range(at: 1), in: processedContent)
+            let filenameRange = Range(match.range(at: 2), in: processedContent)
+
             let block = ParsedCodeBlock(
-                language: String(match.output.1 ?? ""),
-                filename: match.output.2.map(String.init),
-                code: String(match.output.3),
+                language: languageRange.map { String(processedContent[$0]) } ?? "",
+                filename: filenameRange.flatMap { $0.isEmpty ? nil : String(processedContent[$0]) },
+                code: String(processedContent[codeRange]),
                 highlightedLines: [],
                 showLineNumbers: true
             )
             codeBlocks.append(block)
             blocks.append(.codeBlock(block))
         }
-        
+
         // Parse callouts
-        let calloutPattern = /:::(note|tip|warning|important|caution|info|success|danger|experiment)\n([\s\S]*?):::/
-        for match in processedContent.matches(of: calloutPattern) {
-            if let type = CalloutType(rawValue: String(match.output.1)) {
+        let calloutPattern = ":::(note|tip|warning|important|caution|info|success|danger|experiment)\\n([\\s\\S]*?):::"
+        for match in regexMatches(of: calloutPattern, in: processedContent, options: [.dotMatchesLineSeparators]) {
+            guard
+                let typeRange = Range(match.range(at: 1), in: processedContent),
+                let contentRange = Range(match.range(at: 2), in: processedContent)
+            else { continue }
+
+            let typeString = String(processedContent[typeRange])
+            if let type = CalloutType(rawValue: typeString) {
                 let callout = ParsedCallout(
                     type: type,
                     title: nil,
-                    content: String(match.output.2).trimmingCharacters(in: .whitespacesAndNewlines)
+                    content: String(processedContent[contentRange]).trimmingCharacters(in: .whitespacesAndNewlines)
                 )
                 callouts.append(callout)
                 blocks.append(.callout(callout))
             }
         }
-        
+
         // Parse links
-        let linkPattern = /\[([^\]]+)\]\(([^)]+)\)/
-        for match in processedContent.matches(of: linkPattern) {
-            let url = String(match.output.2)
+        let linkPattern = "\\[([^\\]]+)\\]\\(([^)]+)\\)"
+        for match in regexMatches(of: linkPattern, in: processedContent) {
+            guard
+                let textRange = Range(match.range(at: 1), in: processedContent),
+                let urlRange = Range(match.range(at: 2), in: processedContent)
+            else { continue }
+
+            let url = String(processedContent[urlRange])
             links.append(ParsedLink(
-                text: String(match.output.1),
+                text: String(processedContent[textRange]),
                 url: url,
                 isExternal: url.hasPrefix("http"),
                 isAPIReference: url.hasPrefix("doc:")
             ))
         }
-        
+
         // Parse headings
-        let headingPattern = /^(#{1,6})\s+(.+)$/
-        for line in processedContent.components(separatedBy: .newlines) {
-            if let match = line.firstMatch(of: headingPattern) {
-                let level = match.output.1.count
-                let text = String(match.output.2)
-                let id = text.lowercased().replacingOccurrences(of: " ", with: "-")
-                blocks.append(.heading(level: level, text: text, id: id))
-            }
+        let headingPattern = "^(#{1,6})\\s+(.+)$"
+        for match in regexMatches(of: headingPattern, in: processedContent, options: [.anchorsMatchLines]) {
+            guard
+                let levelRange = Range(match.range(at: 1), in: processedContent),
+                let textRange = Range(match.range(at: 2), in: processedContent)
+            else { continue }
+
+            let level = processedContent[levelRange].count
+            let text = String(processedContent[textRange])
+            let id = text.lowercased().replacingOccurrences(of: " ", with: "-")
+            blocks.append(.heading(level: level, text: text, id: id))
         }
         
         return ParseResult(
@@ -205,5 +224,11 @@ public struct DocumentationParser: Sendable {
         }
         
         return errors
+    }
+
+    private func regexMatches(of pattern: String, in content: String, options: NSRegularExpression.Options = []) -> [NSTextCheckingResult] {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else { return [] }
+        let range = NSRange(location: 0, length: (content as NSString).length)
+        return regex.matches(in: content, options: [], range: range)
     }
 }
