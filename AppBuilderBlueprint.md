@@ -1,27 +1,32 @@
 # App Builder Blueprint
 
-A comprehensive system for generating production-grade apps from markdown specifications, paired with automation workflows for building, testing, and deploying.
+A comprehensive system for generating production-grade apps and their accompanying documentation from markdown specifications, paired with automation workflows for building, testing, deploying, and publishing knowledge artifacts.
 
 ---
 
 ## 🎯 Overview
 
 ```
-Design/Spec → Components → Code Generation → Multi-Platform → Testing → Deployment
-     ↓              ↓              ↓               ↓           ↓          ↓
-  Markdown    Templates    SwiftUI Gen      iOS/Mac/Watch  Test Gen   Build Tasks
+Design/Spec → Components → Code Generation → Multi-Platform → Testing → Deployment → Documentation Automation
+     ↓              ↓              ↓               ↓           ↓          ↓                ↓
+  Markdown    Templates    SwiftUI Gen      iOS/Mac/Watch  Test Gen   Build Tasks     Docs Gen & Publishing
 ```
 
 ---
 
-## 🏗️ 9 Major Sections
+## 🏗️ 10 Major Sections
 
 ### 1. Architecture Overview
 - Complete system hierarchy (Specification → Components → Generation → Output)
 - Integration with Automation Module
 - Multi-layer stack (design → code → deployment)
 
-### 2. App Specification Model
+### 2. Documentation Automation & Knowledge Pipeline
+- DocSpec schema for README, API docs, policies, playbooks, and blueprints
+- Documentation generator that renders Markdown, HTML, and SwiftDoc-compatible outputs
+- Publishing pipeline for docs sites, PDF exports, and in-app help bundles
+
+### 3. App Specification Model
 ```swift
 struct AppSpecification {
     // Identity & metadata
@@ -48,13 +53,13 @@ struct AppSpecification {
 }
 ```
 
-### 3. Screen & Layout Definition
+### 4. Screen & Layout Definition
 - Screen definitions with layouts (VStack, HStack, Grid, Scroll)
 - Component definitions with properties and bindings
 - Responsive breakpoints for adaptive layouts
 - Navigation & deep linking configuration
 
-### 4. Component Template Library
+### 5. Component Template Library
 ```swift
 // Built-in components (50+)
 - Button (primary, outline, material, glass)
@@ -65,7 +70,7 @@ struct AppSpecification {
 - Advanced animations & transitions
 ```
 
-### 5. Code Generation Engine
+### 6. Code Generation Engine
 ```swift
 // Generates complete SwiftUI apps
 - View generation from layouts
@@ -75,7 +80,7 @@ struct AppSpecification {
 - Modifiers & accessibility
 ```
 
-### 6. Multi-Platform Generation
+### 7. Multi-Platform Generation
 ```swift
 // Platform-specific generators
 iOS          → StatusBar, SafeArea, Navigation
@@ -85,7 +90,7 @@ tvOS         → Focus Engine, Remote Control
 visionOS     → Spatial Computing, Hand Tracking
 ```
 
-### 7. Project Structure Generator
+### 8. Project Structure Generator
 Generates complete Xcode project:
 - App entry points
 - Data models
@@ -97,7 +102,7 @@ Generates complete Xcode project:
 - Resources & assets
 - Documentation
 
-### 8. Integration with Automation Module
+### 9. Integration with Automation Module
 ```swift
 // AppBuildTask - integrates with workflow system
 class AppBuildTask: Task {
@@ -123,7 +128,7 @@ let appBuildWorkflow = """
 """
 ```
 
-### 9. Testing & Quality Assurance
+### 10. Testing & Quality Assurance
 ```swift
 // Auto-generates test suites
 - ViewModel unit tests
@@ -192,6 +197,11 @@ ProductList → ProductDetail
 - Platform capabilities (Menu, Navigation, Focus)
 - Cross-platform state sharing
 
+### Documentation Automation
+- Generate READMEs, architecture docs, and API references directly from specs
+- Auto-link code entities to doc sections and cross-reference workflows
+- Output channels: repository docs folder, docs site, PDF export, and in-product help widgets
+
 ### Deployment Tasks
 ```swift
 AppDeployTask
@@ -222,6 +232,7 @@ AppDeployTask
 │  │  ├─ Data Model Generator                          │ │
 │  │  ├─ Network Layer Generator                       │ │
 │  │  ├─ Project Structure Generator                   │ │
+│  │  ├─ Documentation Generator                       │ │
 │  │  └─ Platform-Specific Generators                  │ │
 │  └────────────┬───────────────────────────────────────┘ │
 │               │                                          │
@@ -231,7 +242,8 @@ AppDeployTask
 │  │  ├─ Build Configuration                           │ │
 │  │  ├─ Test Suites                                   │ │
 │  │  ├─ Resources & Assets                            │ │
-│  │  └─ Documentation                                 │ │
+│  │  ├─ Documentation                                 │ │
+│  │  └─ Publishing Channels                            │ │
 │  └────────────┬───────────────────────────────────────┘ │
 │               │                                          │
 │  ┌────────────▼───────────────────────────────────────┐ │
@@ -290,6 +302,7 @@ let deployExecution = try await automation.execute(deployWorkflow, with: [
 - **Test Generation** — Unit, UI, and snapshot tests auto-generated
 - **Project Generation** — Complete Xcode projects with build config
 - **Automation Integration** — Build, test, deploy via workflows
+- **Documentation Automation** — DocSpec schema, generators, and publishing channels for README/API/architecture docs
 - **Visual Editor** — Drag-and-drop app builder interface
 - **Markdown Specs** — Design apps with simple markdown syntax
 
